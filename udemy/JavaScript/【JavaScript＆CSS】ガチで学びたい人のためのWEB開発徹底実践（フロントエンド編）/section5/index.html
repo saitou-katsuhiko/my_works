@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div class="animate-titleVVV">
+            <span class="char">A</span>
+            <span class="char">N</span>
+            <span class="char">I</span>
+            <span class="char">M</span>
+            <span class="char">A</span>
+            <span class="char">T</span>
+            <span class="char">I</span>
+            <span class="char">O</span>
+            <span class="char">N</span>
+        </div>
+        <div class="animate-title">
+            ANIMATION
+        </div>
+        <div class="animate-title-2">
+            ANIANIANI
+        </div>
+        <button onclick="document.querySelector('.animate-title').classList.toggle('inview');">Animation</button>
+    </div>
+    <script>
+
+        
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ta = new TextAnimation('.animate-title');
+            const ta2 = new TextAnimation('.animate-title-2');
+            setTimeout(() => {
+                ta.animate();
+                ta2.animate();
+            }, 1000);
+        });
+        class TextAnimation {
+            constructor(el) {
+                this.el = document.querySelector(el);
+                this.chars = this.el.innerHTML.trim().split("");
+                this.el.innerHTML = this._splitText();
+            }
+            _splitText() {
+                return this.chars.reduce((acc, curr) => {
+                    curr = curr.replace(/\s+/, '&nbsp;');
+                    return `${acc}<span class="char">${curr}</span>`;
+                }, "");
+            }
+            animate() {
+                this.el.classList.toggle('inview');
+            }
+        }
+    </script>
+</body>
+</html>

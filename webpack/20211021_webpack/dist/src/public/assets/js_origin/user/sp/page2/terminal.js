@@ -1,0 +1,1 @@
+(()=>{"use strict";setTimeout((()=>{document.querySelector("body").style.backgroundColor="blue"}),1e3),changeTextColor("white",1e3)})();

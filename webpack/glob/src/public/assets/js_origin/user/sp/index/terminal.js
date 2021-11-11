@@ -1,2 +1,2 @@
-import {messageAlert} from "../modules/messageAlert.js"
-messageAlert('indexです！！');
+import messageAlert from "../modules/messageAlert.js"
+messageAlert('indexじゃないです！！！');

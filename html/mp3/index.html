@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <style>
+        .audioList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            grid-template-rows: repeat(auto-fill, 100px);
+            gap: 20px;
+        }
+        .item {
+            display: inline-block;
+            background: #ddd;
+        }
+        video {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>mp3test</h1>
+    <p>仕様</p>
+    <ul>
+        <li>再生ボタンを押して再生、テキストを停止に変更</li>
+        <li>停止ボタンを押して停止</li>
+        <li>再度再生する場合は初めから</li>
+        <li>再生が終わるとテキストが再生に戻る</li>
+        <li>再生中に他の再生を始めると、現在再生中の物は停止し、ボタンを押したものが再生される</li>
+        <li>可能であれば単体音声のみの別ページでも共通の処理で済ませる</li>
+    </ul>
+
+    <ul class="audioList">
+        <li class="item">
+            <button class="button--playAudio">再生</button>
+            <audio class="audio">
+                <source src="a.mp3" type="audio/mp3">
+            </audio>
+        </li>
+        <li class="item">
+            <button class="button--playAudio">再生</button>
+            <audio class="audio">
+                <source src="b.mp3" type="audio/mp3">
+            </audio>    
+        </li>
+        <li class="item">
+            <button class="button--playAudio">再生</button>
+            <audio class="audio">
+                <source src="c.mp3" type="audio/mp3">
+            </audio>    
+        </li>
+        <li class="item">
+            <button class="button--playAudio">再生</button>
+            <audio class="audio">
+                <source src="a.mp3" type="audio/mp3">
+            </audio>
+        </li>
+        <li class="item">
+            <button class="button--playAudio">再生</button>
+            <audio class="audio">
+                <source src="b.mp3" type="audio/mp3">
+            </audio>    
+        </li>
+        <li class="item">
+            <button class="button--playAudio">再生</button>
+            <audio class="audio">
+                <source src="c.mp3" type="audio/mp3">
+            </audio>    
+        </li>
+    </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            let audioPlayState = false,//再生状態 
+                activeAudio = undefined,//再生中ファイル
+                millDuration = 0;//再生時間
+            const buttonList = document.querySelectorAll('.button--playAudio'),
+                  audioList = document.querySelectorAll('audio');
+
+
+            function consoleClick(e){
+                console.log('click' + this.num + this.oniku);
+            }
+
+            for(var i = 0;i < buttonList.length;i++){
+                buttonList[i].addEventListener('click', { target: audioList[i], handleEvent:audioFunction }, false);
+            }
+
+
+            function audioFunction(target){
+                if(audioPlayState == true){//再生中
+                    audioStop();
+                    if(target.nextElementSibling == activeAudio) {//停止ボタン
+                        console.log('停止')
+                    } else {//他の曲
+                        console.log('他の曲')
+                    }
+                } else {//停止中
+                    console.log(target);
+                    audioPlay(target);
+                    audioTimer = window.setTimeout(function(){
+                        console.log('timer');
+                    }, 100);
+                }
+            }
+
+            function audioPlay(t){
+                console.log('playFunc');
+                t.closest('.item').querySelector('audio').play();
+                millDuration = Math.ceil(t.closest('.item').querySelector('audio').duration * 1000);
+                console.log(millDuration);
+            }
+            function audioStop(){
+                console.log('stopFunc');
+                for(var i = 0;i < audioList.length;i++){
+                    audioList[i].pause();
+                }
+                activeAudio.currentTime = 0;
+                activeAudio = undefined;
+            }
+
+
+        }, false);
+    </script>
+</body>
+</html>

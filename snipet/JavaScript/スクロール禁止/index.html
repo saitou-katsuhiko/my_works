@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>do scroll!!</button>
+    <h1 style="height: 200vh;background:rgb(168, 199, 199);">No scroll!!</h1>
+    <script>
+        function disableScroll(event) {
+            event.preventDefault();
+        }
+
+        document.addEventListener('touchmove', disableScroll, { passive: false });
+        document.addEventListener('mousewheel', disableScroll, { passive: false });
+
+        document.querySelector('button').onclick = function() {
+            document.removeEventListener('touchmove', disableScroll, { passive: false });
+		    document.removeEventListener('mousewheel', disableScroll, { passive: false });
+            document.querySelector('h1').innerHTML = 'OK scroll!!!!!';
+        }
+    </script>
+</body>
+</html>
