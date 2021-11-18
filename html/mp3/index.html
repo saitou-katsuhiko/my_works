@@ -36,37 +36,37 @@
 
     <ul class="audioList">
         <li class="item">
-            <button class="button--playAudio">再生</button>
+            <button class="button--playAudio">再生する</button>
             <audio class="audio">
                 <source src="a.mp3" type="audio/mp3">
             </audio>
         </li>
         <li class="item">
-            <button class="button--playAudio">再生</button>
+            <button class="button--playAudio">再生する</button>
             <audio class="audio">
                 <source src="b.mp3" type="audio/mp3">
             </audio>    
         </li>
         <li class="item">
-            <button class="button--playAudio">再生</button>
+            <button class="button--playAudio">再生する</button>
             <audio class="audio">
                 <source src="c.mp3" type="audio/mp3">
             </audio>    
         </li>
         <li class="item">
-            <button class="button--playAudio">再生</button>
+            <button class="button--playAudio">再生する</button>
             <audio class="audio">
                 <source src="a.mp3" type="audio/mp3">
             </audio>
         </li>
         <li class="item">
-            <button class="button--playAudio">再生</button>
+            <button class="button--playAudio">再生する</button>
             <audio class="audio">
                 <source src="b.mp3" type="audio/mp3">
             </audio>    
         </li>
         <li class="item">
-            <button class="button--playAudio">再生</button>
+            <button class="button--playAudio">再生する</button>
             <audio class="audio">
                 <source src="c.mp3" type="audio/mp3">
             </audio>    
@@ -81,49 +81,52 @@
             const buttonList = document.querySelectorAll('.button--playAudio'),
                   audioList = document.querySelectorAll('audio');
 
-
-            function consoleClick(e){
-                console.log('click' + this.num + this.oniku);
-            }
-
             for(var i = 0;i < buttonList.length;i++){
-                buttonList[i].addEventListener('click', { target: audioList[i], handleEvent:audioFunction }, false);
+                buttonList[i].addEventListener('click', { target: audioList[i],button: buttonList[i], handleEvent:audioFunction }, false);
             }
 
-
-            function audioFunction(target){
+            function audioFunction(target, button){
                 if(audioPlayState == true){//再生中
-                    audioStop();
-                    if(target.nextElementSibling == activeAudio) {//停止ボタン
-                        console.log('停止')
+                    clearTimeout(audioTimer);
+                    if(this.button.nextElementSibling == activeAudio) {//停止ボタン
+                        audioStop(this.target, this.button);
+                        clearTimeout(audioTimer);
+                        activeAudio = undefined;
+                        
                     } else {//他の曲
-                        console.log('他の曲')
+                        activeAudio.previousElementSibling.innerText = '再生する';
+                        audioStop(this.target, this.button);
+                        clearTimeout(audioTimer);
+                        audioPlay(this.target, this.button);
                     }
                 } else {//停止中
-                    console.log(target);
-                    audioPlay(target);
-                    audioTimer = window.setTimeout(function(){
-                        console.log('timer');
-                    }, 100);
+                    audioPlay(this.target, this.button);
                 }
             }
 
-            function audioPlay(t){
+            function audioPlay(t,b){
                 console.log('playFunc');
                 t.closest('.item').querySelector('audio').play();
                 millDuration = Math.ceil(t.closest('.item').querySelector('audio').duration * 1000);
-                console.log(millDuration);
-            }
-            function audioStop(){
+                activeAudio = t;
+                audioPlayState = true;
+                b.innerText = '停止する';
+                audioTimer = window.setTimeout(function(){
+                    console.log('timer');
+                    audioStop(t, b);
+                }, millDuration);
+             }
+            function audioStop(t,b){
                 console.log('stopFunc');
                 for(var i = 0;i < audioList.length;i++){
-                    audioList[i].pause();
+                    audioList[i].pause(t);
                 }
                 activeAudio.currentTime = 0;
+
                 activeAudio = undefined;
+                audioPlayState = false;
+                b.innerText = '再生する';
             }
-
-
         }, false);
     </script>
 </body>

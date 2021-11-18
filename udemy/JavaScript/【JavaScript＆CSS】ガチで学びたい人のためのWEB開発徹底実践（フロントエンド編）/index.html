@@ -9,6 +9,28 @@
 <body>
     JavaScript基礎
     <div id="btn">ボタン</div>
-    <script src="script.js"></script>
+    <script>
+        const obj = {
+            first_name: 'mafia',
+            last_name: 'Code',
+            printFullName: function() {
+                console.log(this.first_name);
+            }
+        }
+
+        class MyObj {
+            constructor() {
+                this.first_name = 'Mafia2';
+                this.last_name = 'Code';
+            }
+            printFullName() {
+                console.log(this.first_name);
+            }
+        }
+
+        const obj2 = new MyObj();
+
+        obj2.printFullName();
+    </script>
 </body>
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>extends test</h1>
+    <script>
+        class Polygon {
+            constructor(height, width) {
+                this.name = 'Polygon';
+                this.height = height;
+                this.width = width;
+            }
+            sayName(){
+                console.log('Hi, I am a ', this.name + '.');
+            }
+            sayHistory(){
+                console.log('"Polygon" is derived from the Greek polus (many) ' + 'and gonia (angle).');
+            }
+        }
+        let p = new Polygon(300, 400);
+        p.sayName();
+        console.log('The width of this polygon is ' + p.width);
+    
+
+        class Square extends Polygon {
+            constructor(length) {
+                super(length, length);
+                this.name = 'Square';
+            }
+
+            get area() {
+                return this.height * this.width;
+            }
+
+            set area(value) {
+                this.area = value;
+            }
+        }
+
+        let s = new Square(5);
+
+        s.sayName();
+        console.log('The area of this square is ' + s.area);
+    </script>
+</body>
+</html>

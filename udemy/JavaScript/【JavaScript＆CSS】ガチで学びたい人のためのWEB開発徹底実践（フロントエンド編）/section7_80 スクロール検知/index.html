@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="child"></div>
+    <script>
+        const child = document.querySelector('.child');
+        
+        const cb = function(entries, observer) {
+            //alert('intersecting');
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    console.log('inview'); 
+                    entry.target.classList.add('inview');
+                    //observer.unobserve(entry.target);
+                } else {
+                    console.log('outview');
+                    entry.target.classList.remove('inview');
+                }
+            });
+        }
+        const option = {
+            root: null,
+            rootMargin: "-200px 0px",
+            //threshold: ,
+        };
+        
+        const io = new IntersectionObserver(cb, option);
+        io.observe(child);
+        //io.observe(child1);
+        //io.observe(child2);
+    </script>
+</body>
+</html>

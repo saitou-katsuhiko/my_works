@@ -1,0 +1,24 @@
+.container {
+  background: blue;
+}
+
+body {
+  height: 300vh;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: gray;
+}
+
+.child {
+  position: absolute;
+  top: 150vh;
+  background: red;
+  width: 100px;
+  height: 400px;
+}
+
+.child.inview {
+  background: green;
+}
+/*# sourceMappingURL=style.css.map */

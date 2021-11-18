@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .inview {
+            background: blue;
+        }
+        .char {
+            opacity: 0;
+        }
+        .char.inview {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="animate-title">ANIMATE</div>
+    <p class="tween-animate-title">testestestestes</p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ta = new TweenTextAnimateion('.tween-animate-title');
+            const ta2 = new TextAnimation('.animate-title')
+            setTimeout(() => {
+                ta.animate();
+                ta2.animate();
+            },1000);
+        });
+        class TextAnimation {
+            constructor(el) {
+                this.DOM = {};
+                this.DOM.el = document.querySelector(el);
+                this.chars = this.DOM.el.innerHTML.trim().split("");
+                this.DOM.el.innerHTML = this._splitText();
+            }
+            _splitText() {
+                return this.chars.reduce((acc, curr) => {
+                    curr = curr.replace(/\s+/, '&nbsp;');
+                    return `${acc}<span class="char">${curr}</span>`;
+                }, "");
+            }
+            animate() {
+                this.DOM.el.classList.toggle('inview');
+            }
+        }
+        class TweenTextAnimateion extends TextAnimation {
+            constructor(el) {
+                super(el);
+                this.DOM.chars = this.DOM.el.querySelectorAll('.char');
+            }
+            animate() {
+                this.DOM.chars.forEach((c, i) => {
+                    TweenMax.to(c, .6, {
+                        ease: Back.easeOut,
+                        delay: i * .05,
+                        startAt: { y: '-50%', opacity: 0},
+                        y: '0%',
+                        opacity: 1
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>

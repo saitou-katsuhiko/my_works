@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+}
+
+.container {
+  height: 100vh;
+  position: relative;
+  background: aquamarine;
+}
+
+.container:nth-child(2) {
+  background: khaki;
+}
+
+.container:nth-child(3) {
+  background: indianred;
+}
+
+.tween-animate-title {
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  font-weight: bold;
+  color: #3a3a3a;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  word-break: break-all;
+}
+/*# sourceMappingURL=style.css.map */
